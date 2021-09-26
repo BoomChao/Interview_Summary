@@ -1,6 +1,6 @@
 
 
-//Leetcode第一题:wo Sum
+//Leetcode第一题:two Sum
 //计算两数之和
 
 //思路:利用hash
