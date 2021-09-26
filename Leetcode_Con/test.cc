@@ -31726,8 +31726,7 @@ std::vector<std::vector<int>> updateMatrix(std::vector<std::vector<int>> &mat)
 
 
 int main() {
-    
+
 
     return 0;
 }
-
