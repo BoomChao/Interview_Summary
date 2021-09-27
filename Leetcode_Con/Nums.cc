@@ -1344,7 +1344,7 @@ bool canAttendingMeetings(std::vector<std::vector<int>> &intervals)
 
 
 /*
-Leetcode第253题
+Leetcode第253题(与牛客NC147题相同)
 
 描述:给定一个会议时间安排的数组,每个会议时间都会包含开始和结束的时间[[s1,e1],[s2,e2]....](si < ei),为避免会议冲突,同时要考虑和充分利用会议资源,请计算至少需要多少间会议室
 如: [[0,30],[5,10],[15,20]] 输出 2
@@ -1358,20 +1358,20 @@ Leetcode第253题
 
 int minMeetingRooms(std::vector<std::vector<int>> &intervals)
 {
+    int n = intervals.size();
+
     sort(intervals.begin(), intervals.end());
 
     std::priority_queue<int, std::vector<int>, std::greater<int>> pq;
     pq.push(intervals[0][1]);
 
-    int count = 0;
-    
-    for(int i = 1; i < intervals.size(); i++) {
-        if(pq.empty() || intervals[i][0] < pq.top()) count++;
-        else pq.pop();
-        pq.push(intervals[i][1]);
+    for(int i = 1; i < n; i++)
+    {
+        if(pq.top() <= nums[i][0]) pq.pop();
+        pq.push(nums[i][1]);
     }
 
-    return count;
+    return pq.size();
 }
 
 
@@ -1487,8 +1487,8 @@ std::vector<std::vector<int>> getSkyline(std::vector<std::vector<int>> &building
 
 ////////////////
 //
-//    在两个排序数组中找到第k小的数  <面试指南>P521
-//    将数字转化成中文表示
+//    在两个排序数组中找到第k小的数  <面试指南> P521
+//    将数字转化成中文表示          <面试指南> P503
 //
 //////////////////
 
@@ -1585,5 +1585,128 @@ int findKthNum(std::vector<int> &nums1, std::vector<int> &nums2, int k)
     }
 
     return getUpMedian(nums1, 0, m - 1, nums2, k - m, k - 1);
+}
+
+
+
+//数字转汉字表示
+
+//先解决1-9之间的数字表达
+std::string num1To9(int num)
+{
+    if(num < 1 || num > 9) return "";
+
+    std::vector<std::string> names = {"一", "二", "三", "四", "五", "六", "七", "八", "九"};
+
+    return names[num-1];
+}
+
+
+//1-99之间的表达
+std::string num1To99(int num, bool hasBai)
+{
+    if(num < 1 || num > 99) return "";
+
+    if(num < 10) return num1To9(num);
+
+    int shi = num/10;
+    if(shi == 1 && !hasBai) {               //如果有百位的话,比如114,则读为一百一十四
+        return "十" + num1To9(num%10);      //没有百位的话,比如14,则读为十四
+    }
+    else {
+        return num1To9(shi) + "十" + num1To9(num%10);
+    }
+
+}
+
+
+//1-999之间的表达
+std::string num1To999(int num)
+{
+    if(num < 1 || num > 999) return "";
+
+    if(num < 100) {
+        return num1To99(num, false);
+    }
+
+    std::string res = num1To9(num/100) + "百";
+    int rest = num % 100;
+
+    if(rest == 0) {
+        return res;
+    }
+    else if(rest >= 10) {
+        res += num1To99(rest, true);
+    }
+    else {
+        res += "零" + num1To9(rest);
+    }
+
+    return res;
+}
+
+
+//1-9999之间的表达
+std::string num1To9999(int num)
+{
+    if(num < 1 || num > 9999) return "";
+
+    if(num < 1000) return num1To999(num);
+
+    std::string res = num1To9(num/1000) + "千";
+    int rest = num % 1000;
+
+    if(rest == 0) {
+        return res;
+    }
+    else if(rest >= 100) {
+        res += num1To999(rest);
+    }
+    else {
+        res += "零" + num1To99(rest, false);
+    }
+
+    return res;
+}
+
+
+std::string num1To99999999(int num)
+{
+    if(num < 1 || num > 99999999) return "";
+
+    int wan = num / 10000;
+    int rest = num % 10000;
+
+    if(wan == 0) return num1To9999(rest);
+
+    std::string res = num1To9999(wan) + "万";
+
+    if(rest == 0) return res;
+    else {
+        if(rest < 1000) return res + "零" + num1To999(rest);
+        else return res + num1To9999(rest);
+    }
+
+}
+
+
+std::string getNumChiExp(int num)
+{
+    if(num == 0) return "零";
+
+    std::string res = num < 0 ? "负" : "";
+    int yi = abs(num / 100000000);
+    int rest = abs((num % 100000000));
+
+    if(yi == 0) return res + num1To99999999(rest);
+
+    res += num1To9999(yi) + "亿";
+
+    if(rest == 0) return res;
+    else {
+        if(rest < 10000000) return res + "零" + num1To99999999(rest);
+        else return res + num1To99999999(rest);
+    }
+
 }
 

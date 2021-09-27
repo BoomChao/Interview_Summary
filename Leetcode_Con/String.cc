@@ -196,7 +196,7 @@ std::string validIpAddress(std::string IP)
 
 
 /*
-    两个字符串的最长公共子串 (参考牛客算法篇)
+    两个字符串的最长公共子串 (参考牛客算法篇NC127)
 */
 
 // dp[i][j]表示以s[i]结尾和t[j]结尾的最长公共子串长度
@@ -273,8 +273,7 @@ int longesetCommonSubsequence(std::string text1, std::string text2)
     {
         if(text1[i-1] == text2[j-1]) {
             res += text1[i-1];
-            i--;
-            j--;
+            i--, j--;
         }
         else if(dp[i-1][j] >= dp[i][j-1]) i--;  //说明当前dp[i][j]是从dp[i-1][j]推导出来的,反推应该减少i,最长子序列在s[0..i-1]和t[0..j]之间
         else j--;                               //同理这说明dp[i][j]是从dp[i][j-1]推导出来的,反推应该减少j
