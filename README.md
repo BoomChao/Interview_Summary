@@ -7,8 +7,14 @@
 
 第四个文件夹是作者归纳的一些算法题型: 每个文件各自的内容如下
 
-1.BitOpt.cc 主要是与位运算相关
+1.BFS 主要是与广度优先搜索，如单词搜索，课表排序，滑动谜题等
 
-2.DFS 主要是与深度优先搜索
-# Leetcode_Algorithm
-# Leetcode_Algorithm
+2.BitOpt.cc 主要是与位运算相关
+
+3.Design_Structure 主要是与设计一些数据结构,如设计LRU,设计Twitter,设计队列，字典树等等
+
+4.DFS 主要是深度优先相关
+
+5.DP 主要是与动态规划相关，如经典的股票买卖问题
+
+6.Graph 主要是图论相关知识，如拓扑排序
