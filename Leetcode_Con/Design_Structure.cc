@@ -536,6 +536,7 @@ public:
 //第212题: 在字符矩阵中查找是否存在给定集合中的字符串
 //思路: 构造一个字典树来方便搜索
 //将字符串全部放到字典树中去,再在矩阵中DFS来与字典树中的元素判断是否匹配
+//这一题是将需要查找的字符串全部放入到字典树，然后根据矩阵中的字符来寻找是否含有匹配的字符串
 
 class TrieNode 
 {
@@ -583,6 +584,7 @@ std::vector<std::string> findWords(std::vector<std::vector<char>> &board, std::v
 
     TrieNode *root = buildTree(words);
 
+    //矩阵的每个字符都需要判断,从四个方向搜索看是否字典树上有满足要求的字符串
     for(int i = 0; i < board.size(); i++) {
         for(int j = 0; j < board[0].size(); j++) {
             dfs(board, i, j, root, res);
@@ -616,7 +618,7 @@ void dfs(std:vector<std::vector<char>> &board, int i, int j, TrieNode *root, std
     dfs(board, i + 1, j, root, res);
     dfs(board, i - 1, j, root, res);
 
-    board[i][j] = c;
+    board[i][j] = c;    //回溯
 }
 
 //另外一种写法
@@ -644,8 +646,7 @@ void dfs(std:vector<std::vector<char>> &board, int i, int j, TrieNode *root, std
         board[i][j] = c;
     }
 
-}
-
+} 
 
 
 //Leetcode第745题 : 实现一个快速查询单词前缀和后缀的结构
