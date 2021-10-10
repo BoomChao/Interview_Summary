@@ -598,6 +598,7 @@ void dfs(std:vector<std::vector<char>> &board, int i, int j, TrieNode *root, std
 {
     int m = board.size(), n = board[0].size();
 
+    //判断是否出界
     if(i < 0 || i >= m || j < 0 || j >= n) return;
 
     char c = board[i][j];
