@@ -344,7 +344,7 @@ void dfs(std::vector<std::vector<int>> &graph, int num, std::vector<int> &visite
 //           判断减去后入度是否等于0,等于0接续加入队列
 // 2.判断遍历过的节点数是否等于总的节点数
 
-//方法一: 利用队列
+//方法一: 利用队列(BFS解法)
 
 bool canFinsh(int n, std::vector<std::vector<int>> &prere)
 {
@@ -382,7 +382,7 @@ bool canFinsh(int num, std::vector<std::vector<int>> &prerequisites)
 
     for(auto &e : prerequisites) {
         graph[e[1]].push_back(e[0]);  //加入邻接矩阵
-        degree[e[0]]++;             //入度加1
+        degree[e[0]]++;               //入度加1
     }
 
     //找到第一个入度为0的点即是起点
@@ -402,7 +402,60 @@ bool canFinsh(int num, std::vector<std::vector<int>> &prerequisites)
         }
     }
 
-    return ans.size() == num;       //把这里的判断返回值改成ans就是下面的答案了
+    return ans.size() == num;       //把这里的判断返回值改成ans就是下面第210题的答案了
+}
+
+
+
+/*
+    DFS解法
+*/
+
+std::unordered_map<int, std::vector<int>> graph;
+std::vector<int> visited;
+std::vector<int> onPath;
+
+bool hasCircle = false;
+
+bool canFinish(int num, std::vector<std::vector<int>> &prere)
+{
+    visited = std::vector<int>(num, 0);     //记录哪些节点已经遍历过
+    onPath = std::vector<int>(num, 0);      //记录当前的搜索路径
+
+    for(auto &e : prere) {
+        graph[e[1]].push_back(e[0]);
+    }
+
+    //一个一个尝试遍历
+    for(int i = 0; i < num; i++) {
+        if(!visited[i]) dfs(i);
+    }
+
+    //是否存在环
+    if(hasCircle) return false;
+
+    //如果不存在环，判断每个节点是否都遍历到了
+    for(int i = 0; i < num; i++) {
+        if(!visited[i]) return false;
+    }
+
+    return true;
+}
+ 
+void dfs(int s)
+{
+    visited[s] = 1;     //记录当前
+    onPath[s] = 1;      //选中
+
+    for(const int &w : graph[s]) 
+    {
+        if(hasCircle) return ;
+        else if(!visited[w]) dfs(w);
+        else if(onPath[w]) hasCircle = true;
+    }
+
+    //回溯
+    onPath[s] = false;
 }
 
 

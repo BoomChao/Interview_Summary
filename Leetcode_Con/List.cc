@@ -180,7 +180,7 @@ ListNode* deleteDuplicates(ListNode *head)
 
 // 解法一：两两合并
 // 时间复杂度分析 :　假设初始k个链表的初始平均长度为n,则第一次合并时间复杂度为(k/2)*(2n), 第二次合并时间复杂度为 (k/4)*(4n), ...
-// 所以总的时间复杂度为 (k/2)*(2n) + (k/4)*(4n) + (k/(2^logk))*(2^logk*n) = (logk)(kn)
+// 所以总的时间复杂度为 (k/2)*(2n) + (k/4)*(4n) + ... + (k/(2^logk))*(2^logk*n) = (logk)(kn)
 // 空间复杂度:需要一个递归大小为nk的栈空间,空间复杂度为O(nk)
 
 ListNode* mergeKLists(std::vector<ListNode*> &lists)
