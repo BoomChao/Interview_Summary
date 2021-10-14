@@ -102,6 +102,7 @@ std::vector<int> postorderTraversal(TreeNode *root)
 
 //Leetcode第102题:层序遍历
 
+//借助队列实现层序遍历
 std::vector<std::vector<int>> levelOrder(TreeNode *root)
 {
     std::vector<std::vector<int>> res;
@@ -133,6 +134,31 @@ std::vector<std::vector<int>> levelOrder(TreeNode *root)
 
     return res;
 }
+
+
+//非递归实现层序遍历
+
+std::vector<int> res;
+
+std::vector<std::vector<int>> levelOrder(TreeNode *root)
+{
+    dfs(root, 0);
+
+    return res;
+}
+
+
+void dfs(TreeNode *root, int depth)     //depth用来标识当前是第几层
+{
+    if(root == nullptr) return;
+
+    if(depth >= res.size()) res.push_back({});
+    res[depth].push_back(root->val);
+
+    dfs(root->left, depth + 1);
+    dfs(root->right, depth + 1);
+}
+
 
 
 //Leetcode第103题: 之字形层序遍历

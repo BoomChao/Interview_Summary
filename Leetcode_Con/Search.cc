@@ -643,10 +643,10 @@ std::vector<int> findClosestElements(std::vector<int> &nums, int k, int x)
 //     第1题 : 两数相加(数组无序)
 //   第167题 : 两数之和(数组有序)
 
-//   (653题) : 两数之和(输入为一个BST)
-//   (15题)  : 三数之和 
-//   (16题)  : 最接近目标的三数之和
-//   (18题)  : 四数之和
+//   第653题 : 两数之和(输入为一个BST)
+//   第15题  : 三数之和 
+//   第16题  : 最接近目标的三数之和
+//   第18题  : 四数之和
 //
 /////////////////////////////////
 
@@ -832,7 +832,7 @@ std::vector<std::vector<int>> threeSum(std::vector<int> &nums)
     {
         if(i > 0 && nums[i] == nums[i-1]) continue;
         
-        if(nums[i] + nums[i+1] + nums[i+2] > 0) return res;     //真实面试中这个 return re s最好写成 break语句(不会出错)
+        if(nums[i] + nums[i+1] + nums[i+2] > 0) return res;     //真实面试中这个 return res 最好写成 break语句(不会出错)
         if(nums[i] + nums[n-1] + nums[n-2] < 0) continue; 
                 
         int left = i + 1, right = nums.size() - 1;
@@ -913,7 +913,7 @@ std::vector<std::vector<int>> fourSum(std::vector<int> &nums, int target)
         //排除重复的元素
         if(i > 0 && nums[i] == nums[i-1]) continue;
         
-        int minSum = nums[i] + nums[i+1] + nums[i+2] + nums[i+3];
+        int minSum = nums[i] + nums[i+1] + nums[i+2] + nums[i+3];   
         if(minSum > target) break;              //后面元素都是递增的,当前元素的最小和都大于target, 则后面的元素和肯定也都大于taregt
 
         int maxSum = nums[i] + nums[n-1] + nums[n-2] + nums[n-3];

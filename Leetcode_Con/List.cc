@@ -386,7 +386,7 @@ ListNode* reverseKGroup(ListNode *head, int k)
             //将翻转后的链表链接起来
             pNode = prev->next;
             prev->next = reverseList;
-            pNode->next = pNext;
+            pNode->next = tail;
         }
     }
 
