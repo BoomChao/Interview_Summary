@@ -14,6 +14,7 @@
 *   第371题: 不用加减乘除做加法
 
 *   第600题: 计算(1,n)之间存在多少个数的二进制表示没有连续的1存在
+
 */
 
 //注意:对移位运算符,左移高位舍弃,低位补0;   右移高位补符号位,低位舍弃
@@ -217,3 +218,103 @@ int getSum(int a, int b)
 
     return a;
 }
+
+
+
+
+/*
+
+*   第1178题: 计算Puzzle对应的有效的单词数
+*   第1286题: Iterator for Combation
+
+*/
+
+//Leetcode第1178题:每个Puzzle对应的有效单词数量
+
+std::vector<int> findNumOfValidWords(std::vector<std::string> &words, std::vector<std::string> &puzzles)
+{
+    std::unordered_map<int,int> mp;
+
+    for(auto &word : words) {
+        int mask = 0;
+        for(const char &c : word) {
+            mask |= 1 << (c-'a');
+        }
+        mp[mask]++;     //使用bit记录每个单词
+    }
+
+    std::vector<int> res;
+
+    for(auto &str : puzzles)
+    {
+        int mask = 0;
+        for(const char &c : str) {
+            mask |= 1 << (c - 'a');
+        }
+
+        int c = 0;
+        int sub = mask;
+        int first = 1 << (str.front() - 'a');
+
+        while(1) {
+            if((sub & first) == first && mp.count(sub)) {   //判断单词首字母是否在puzzle里面
+                c += mp[sub];
+            }
+            if(sub == 0) break;         //点睛之笔
+            sub = (sub - 1) & mask;     //继续找下一个与mask有相同字符的字符串(所以这里要与mask做一个按位与运算)
+        }
+
+        res.push_back(c);
+    }
+
+    return res;
+}
+
+
+//第1286题：设计一个迭代器,判断有序字符串的输出
+
+class CombationIterator {
+    
+    std::set<std::string> generateAllCombination(std::string s, int len) 
+    {
+        int mask = 1 << s.size();
+        std::set<std::string> mySet;
+        std::string comStr;
+
+        for(int no = 1; no < mask; no++)
+        {
+            int num = no, i = 0;
+            while(num) {
+                if(num & 1) comStr = comStr + s[i];
+                i++, num >>= 1;
+            }
+
+            if(comStr.size() == len) mySet.insert(comStr);
+            comStr = "";
+        }
+
+        return mySet;
+    }
+
+
+public:
+
+    std::set<std::string> mySet;
+    std::set<std::string>::iterator cur;
+
+    CombationIterator(std::string characters, int combinationLength) {
+        mySet = generateAllCombination(characters, combinationLength);
+        cur = mySet.begin();
+    }
+
+    std::string next() {
+        return *cur++;
+    }
+
+    bool hasNext() {
+        return cur != mySet.end();
+    }
+
+};
+
+

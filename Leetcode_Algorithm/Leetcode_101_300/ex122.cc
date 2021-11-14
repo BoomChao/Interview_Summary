@@ -19,5 +19,26 @@ int maxProfit(std::vector<int> &prices)
     }
 
     return profit;
+}
 
+
+//Golang解答
+
+func maxProfit(nums []int) int {
+	var res int = 0
+
+	for i := 1; i < len(nums); i++ {
+		res += max(nums[i] - nums[i-1], 0)
+	}
+	
+	return res
+}
+
+//Golang中不支持三目运算符(?:),也没有 int 类型的Max和Min函数
+func max(a b, int) int {
+	if a > b {
+		return a
+	} else {
+		return b
+	}
 }
