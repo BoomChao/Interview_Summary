@@ -6,7 +6,7 @@
 
 2.Linux 文件夹是我总结的对 Linux 操作系统的一些学习
 
-3.数据库主要是 MySQl 和 Redis
+3.数据库主要是 MySQL 和 Redis
 
 4.计算机网络看B站韩老师视频总结
 
